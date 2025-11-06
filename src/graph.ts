@@ -10,6 +10,7 @@ import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { tool } from "@langchain/core/tools";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { AppState, AppStateType } from "./state";
+import { normalizeMessages } from "./utils/messages";
 
 // Tool
 const add = tool(
@@ -44,7 +45,8 @@ type AgentState = AppStateType;
 async function assistantNode(
   state: AgentState
 ): Promise<Partial<AgentState>> {
-  const response = await llmWithTools.invoke(state.messages ?? []);
+  const history = normalizeMessages(state.messages);
+  const response = await llmWithTools.invoke(history);
   return { messages: [response] };
 }
 

@@ -3,6 +3,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { SystemMessage } from "@langchain/core/messages";
 import { AppStateType } from "../state";
 import { todoTools } from "../tools/tasks";
+import { normalizeMessages, getMessageText } from "../utils/messages";
 
 const todoModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -23,10 +24,16 @@ Always return a concise list of todos with clear labels.
 export async function todoAgentNode(
   state: AppStateType
 ): Promise<Partial<AppStateType>> {
+  const history = normalizeMessages(state.messages);
   const reply = await todoModel.invoke([
     new SystemMessage(TODO_SYSTEM),
-    ...state.messages,
+    ...history,
   ]);
+
+  const text = getMessageText(reply).trim();
+  if (!text && !((reply as any)?.tool_calls?.length)) {
+    return {};
+  }
 
   return {
     messages: [reply],

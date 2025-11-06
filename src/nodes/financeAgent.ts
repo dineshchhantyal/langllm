@@ -2,6 +2,7 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { SystemMessage } from "@langchain/core/messages";
 import { AppStateType } from "../state";
+import { normalizeMessages, getMessageText } from "../utils/messages";
 
 const baseModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -16,10 +17,16 @@ Explain concepts clearly, mention relevant risks, and avoid giving regulated inv
 export async function financeAgentNode(
   state: AppStateType
 ): Promise<Partial<AppStateType>> {
+  const history = normalizeMessages(state.messages);
   const reply = await baseModel.invoke([
     new SystemMessage(FINANCE_SYSTEM),
-    ...state.messages,
+    ...history,
   ]);
+
+  const text = getMessageText(reply).trim();
+  if (!text && !((reply as any)?.tool_calls?.length)) {
+    return {};
+  }
 
   return {
     messages: [reply],

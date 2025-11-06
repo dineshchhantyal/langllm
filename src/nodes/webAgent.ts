@@ -3,6 +3,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { SystemMessage } from "@langchain/core/messages";
 import { AppStateType } from "../state";
 import { webTools } from "../tools/web";
+import { normalizeMessages, getMessageText } from "../utils/messages";
 
 const webModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -17,10 +18,16 @@ Summarize likely current information, cite recent context if known, and flag unc
 export async function webAgentNode(
   state: AppStateType
 ): Promise<Partial<AppStateType>> {
+  const history = normalizeMessages(state.messages);
   const reply = await webModel.invoke([
     new SystemMessage(WEB_SYSTEM),
-    ...state.messages,
+    ...history,
   ]);
+
+  const text = getMessageText(reply).trim();
+  if (!text && !((reply as any)?.tool_calls?.length)) {
+    return {};
+  }
 
   return {
     messages: [reply],

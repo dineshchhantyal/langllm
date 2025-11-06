@@ -2,6 +2,7 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { SystemMessage } from "@langchain/core/messages";
 import { AppStateType } from "../state";
+import { normalizeMessages, getMessageText } from "../utils/messages";
 
 const baseModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -16,10 +17,16 @@ Structure key points, highlight action items, and keep phrasing concise.
 export async function notesAgentNode(
   state: AppStateType
 ): Promise<Partial<AppStateType>> {
+  const history = normalizeMessages(state.messages);
   const reply = await baseModel.invoke([
     new SystemMessage(NOTES_SYSTEM),
-    ...state.messages,
+    ...history,
   ]);
+
+  const text = getMessageText(reply).trim();
+  if (!text && !((reply as any)?.tool_calls?.length)) {
+    return {};
+  }
 
   return {
     messages: [reply],
