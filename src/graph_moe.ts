@@ -7,6 +7,8 @@ import { todoAgentNode } from "./nodes/todoAgent";
 import { webAgentNode } from "./nodes/webAgent";
 import { notesAgentNode } from "./nodes/notesAgent";
 import { financeAgentNode } from "./nodes/financeAgent";
+import { todoToolNode } from "./tools/tasks";
+import { webToolNode } from "./tools/web";
 
 function routeFromRouter(state: AppStateType) {
   const agent = state.selected_agent;
@@ -17,10 +19,30 @@ function routeFromRouter(state: AppStateType) {
   return END;
 }
 
+function todoNextStep(state: AppStateType) {
+  const messages = state.messages ?? [];
+  const last = messages[messages.length - 1] as any;
+  if (last?.tool_calls && last.tool_calls.length > 0) {
+    return "todo_tools";
+  }
+  return "router";
+}
+
+function webNextStep(state: AppStateType) {
+  const messages = state.messages ?? [];
+  const last = messages[messages.length - 1] as any;
+  if (last?.tool_calls && last.tool_calls.length > 0) {
+    return "web_tools";
+  }
+  return "router";
+}
+
 export const moeGraph = new StateGraph(AppState)
   .addNode("router", routerNode)
   .addNode("todo_agent", todoAgentNode)
+  .addNode("todo_tools", todoToolNode)
   .addNode("web_agent", webAgentNode)
+  .addNode("web_tools", webToolNode)
   .addNode("notes_agent", notesAgentNode)
   .addNode("finance_agent", financeAgentNode)
   .addEdge(START, "router")
@@ -31,8 +53,16 @@ export const moeGraph = new StateGraph(AppState)
     "finance_agent",
     END,
   ])
-  .addEdge("todo_agent", "router")
-  .addEdge("web_agent", "router")
+  .addConditionalEdges("todo_agent", todoNextStep, [
+    "todo_tools",
+    "router",
+  ])
+  .addConditionalEdges("web_agent", webNextStep, [
+    "web_tools",
+    "router",
+  ])
+  .addEdge("todo_tools", "todo_agent")
+  .addEdge("web_tools", "web_agent")
   .addEdge("notes_agent", "router")
   .addEdge("finance_agent", "router")
   .compile({

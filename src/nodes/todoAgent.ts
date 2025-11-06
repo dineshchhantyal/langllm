@@ -2,11 +2,12 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { SystemMessage } from "@langchain/core/messages";
 import { AppStateType } from "../state";
+import { todoTools } from "../tools/tasks";
 
-const baseModel = new ChatGoogleGenerativeAI({
+const todoModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
   temperature: 0,
-});
+}).bindTools(todoTools);
 
 const TODO_SYSTEM = `
 You are a focused todo and task manager.
@@ -22,7 +23,7 @@ Always return a concise list of todos with clear labels.
 export async function todoAgentNode(
   state: AppStateType
 ): Promise<Partial<AppStateType>> {
-  const reply = await baseModel.invoke([
+  const reply = await todoModel.invoke([
     new SystemMessage(TODO_SYSTEM),
     ...state.messages,
   ]);
