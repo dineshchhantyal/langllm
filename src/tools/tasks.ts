@@ -11,13 +11,22 @@ import {
   updateTask,
 } from "../db/taskStore";
 
-const listTasksTool = tool(async () => {
+const listTasksTool = tool(async ({ include_internal_ids }) => {
   const tasks = await listTasks();
-  return summarizeTasks(tasks);
+  const summary = summarizeTasks(tasks);
+  if (include_internal_ids && tasks.length > 0) {
+    const idMap = tasks
+      .map((task) => `- ${task.title} -> ${task.id}`)
+      .join("\n");
+    return `${summary}\n\nInternal IDs:\n${idMap}`;
+  }
+  return summary;
 }, {
   name: "list_tasks",
-  description: "List all stored tasks with their ids and status.",
-  schema: z.object({}),
+  description: "List all stored tasks with their status and any due dates.",
+  schema: z.object({
+    include_internal_ids: z.boolean().optional()
+  }),
 });
 
 const createTaskTool = tool(
@@ -27,7 +36,7 @@ const createTaskTool = tool(
       description: description ?? null,
       dueDate: due_date ?? null,
     });
-    return `Created task:\n${formatTask(created)}`;
+  return `Created task:\n${formatTask(created)}\n  id: ${created.id}`;
   },
   {
     name: "create_task",
@@ -49,7 +58,7 @@ const updateTaskTool = tool(
       description: description ?? undefined,
       dueDate: due_date ?? undefined,
     });
-    return `Updated task:\n${formatTask(updated)}`;
+  return `Updated task:\n${formatTask(updated)}\n  id: ${updated.id}`;
   },
   {
     name: "update_task",
@@ -67,7 +76,7 @@ const updateTaskTool = tool(
 const deleteTaskTool = tool(
   async ({ id }) => {
     const removed = await deleteTask(id);
-    return `Deleted task:\n${formatTask(removed)}`;
+  return `Deleted task:\n${formatTask(removed)}\n  id: ${removed.id}`;
   },
   {
     name: "delete_task",

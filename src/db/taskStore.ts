@@ -34,13 +34,35 @@ async function readTasks(): Promise<TaskRecord[]> {
     const parsed = JSON.parse(raw) as TaskRecord[];
     return Array.isArray(parsed) ? parsed : [];
   } catch {
+    const backupPath = `${TASKS_FILE}.corrupt-${Date.now()}`;
+    try {
+      await fs.rename(TASKS_FILE, backupPath);
+    } catch {
+      // If we fail to move the corrupt file, continue and attempt reset.
+    }
+    await fs.writeFile(TASKS_FILE, "[]", "utf8");
     return [];
   }
 }
 
 async function writeTasks(tasks: TaskRecord[]): Promise<void> {
   await ensureStorage();
-  await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf8");
+  const tmpPath = path.join(
+    DATA_DIR,
+    `.tasks-${randomUUID()}.json.tmp`
+  );
+  const payload = JSON.stringify(tasks, null, 2);
+  await fs.writeFile(tmpPath, payload, "utf8");
+  try {
+    await fs.rename(tmpPath, TASKS_FILE);
+  } catch (err: any) {
+    await fs.unlink(tmpPath).catch(() => {});
+    if (err && err.code === "ENOENT") {
+      await fs.writeFile(TASKS_FILE, payload, "utf8");
+      return;
+    }
+    throw err;
+  }
 }
 
 export async function listTasks(): Promise<TaskRecord[]> {
@@ -120,10 +142,15 @@ export async function deleteTask(id: string): Promise<TaskRecord> {
 }
 
 export function formatTask(task: TaskRecord): string {
-  const statusEmoji = task.status === "done" ? "✅" : "🟡";
-  const due = task.dueDate ? ` (due ${task.dueDate})` : "";
-  const desc = task.description ? `\n    notes: ${task.description}` : "";
-  return `${statusEmoji} ${task.title}${due}\n    id: ${task.id}${desc}`;
+  const checkbox = task.status === "done" ? "[x]" : "[ ]";
+  const lines = [`- ${checkbox} ${task.title}`];
+  if (task.dueDate) {
+    lines.push(`  - due: ${task.dueDate}`);
+  }
+  if (task.description) {
+    lines.push(`  - notes: ${task.description}`);
+  }
+  return lines.join("\n");
 }
 
 export function summarizeTasks(tasks: TaskRecord[]): string {
