@@ -1,41 +1,58 @@
-# LangGraph + Gemini Agent (Bun)
+# LangGraph + Gemini Agents (Bun)
 
-This project demonstrates a minimal LangGraph agent that runs locally with Bun and Google Gemini. The agent accepts chat-style messages, can call a single arithmetic tool, and returns the augmented conversation state.
+This project runs entirely on Bun and showcases two LangGraph flows backed by Google Gemini:
+
+- **`graph.ts`** – a compact agent with one arithmetic tool.
+- **`graph_moe.ts`** – a mixture-of-experts (MoE) router that picks between todo, web, notes, and finance specialists.
 
 ## Prerequisites
-- Bun 1.1 or later (installs dependencies and runs the scripts)
-- Node.js 20 or 22 available on the system (LangGraph requirement)
-- A Google Gemini API key with access to the `gemini-2.5-flash` family
+- Bun 1.1 or later
+- Node.js 20 or 22 (required by LangGraph runtime)
+- Google Gemini API key with access to the `gemini-2.5-flash` models
 
 ## Setup
 1. Install dependencies:
-	 ```bash
-	 bun install
-	 ```
-2. Create a `.env` file in the project root:
-	 ```bash
-	 GOOGLE_API_KEY=your_api_key_here
-	 ```
+   ```bash
+   bun install
+   ```
+2. Create `.env` in the project root:
+   ```bash
+   GOOGLE_API_KEY=your_api_key_here
+   ```
 
 ## Commands
-- Run the agent once from the command line:
-	```bash
-	bun run src/agent-gemini.ts "Add 3 and 9 and explain"
-	```
-	The script logs the final `messages` array returned by the graph, including tool calls and the final assistant reply.
+- Run the single-tool agent:
+  ```bash
+  bun run src/agent-gemini.ts "Add 3 and 9 and explain"
+  ```
+- Run the MoE router demo:
+  ```bash
+  bun run src/run_moe.ts "Help me plan my study todos and check recent S&P performance"
+  ```
+  ```bash
+  bun run moe "Help me plan my study todos and check recent S&P performance"
+  ```
 
-## How It Works
-- `src/graph.ts` – builds the LangGraph workflow:
-	- Configures Gemini with tool support via `ChatGoogleGenerativeAI`
-	- Registers an `add` tool that sums two integers
-	- Defines the assistant node that forwards the running message history to Gemini
-	- Uses conditional routing to decide whether to execute tools or finish
-- `src/agent-gemini.ts` – lightweight Bun CLI entry point that forwards user input to the compiled graph.
+## Code Map
+- `src/state.ts` – shared LangGraph state with messages, optional goal, and router selection.
+- `src/graph.ts` – Gemini + tool binding (`add`) wired through the shared state.
+- `src/nodes/` – router node plus four specialist agents with tailored system prompts.
+- `src/graph_moe.ts` – composes the router and specialists into a looping StateGraph.
+- `src/run_moe.ts` – CLI runner for the MoE graph.
+- `src/agent-gemini.ts` – CLI runner for the single-tool graph.
+
+## LangGraph Studio
+`langgraph.json` exposes both graphs:
+
+- `agent` → `./src/graph.ts:graph`
+- `moe_agent` → `./src/graph_moe.ts:moeGraph`
+
+Start the dev server and open the printed Studio URL:
+```bash
+bunx @langchain/langgraph-cli dev
+```
 
 ## Troubleshooting
-- **Invalid or missing API key** – ensure `.env` is present and `GOOGLE_API_KEY` is valid.
-- **Unexpected input errors** – the graph expects the input shape `{ "messages": [{ "role": "user", "content": "Add 3 and 9 and explain" }] }`. The CLI already formats this structure.
-
-## Next Steps
-- Wrap the script in your own CLI or HTTP server
-- Extend `src/graph.ts` with more tools, memory, or additional LangGraph nodes
+- **API key errors** – verify `.env` and confirm the key has Gemini access.
+- **Unexpected router choice** – the router defaults to `notes` if it cannot classify the intent; inspect the inserted system message to debug.
+- **Message typing issues** – nodes expect LangChain `BaseMessage` instances; use helpers like `HumanMessage` when invoking graphs manually.

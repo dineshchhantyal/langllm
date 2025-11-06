@@ -2,7 +2,6 @@
 import "dotenv/config";
 import { z } from "zod";
 import {
-  MessagesAnnotation,
   StateGraph,
   START,
   END,
@@ -10,6 +9,7 @@ import {
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { tool } from "@langchain/core/tools";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { AppState, AppStateType } from "./state";
 
 // Tool
 const add = tool(
@@ -38,20 +38,19 @@ const llmWithTools = new ChatGoogleGenerativeAI({
 // Tool node
 const toolNode = new ToolNode(tools);
 
-// State type
-type AgentState = typeof MessagesAnnotation.State;
+type AgentState = AppStateType;
 
 // Assistant node
 async function assistantNode(
   state: AgentState
 ): Promise<Partial<AgentState>> {
-  const response = await llmWithTools.invoke(state.messages);
+  const response = await llmWithTools.invoke(state.messages ?? []);
   return { messages: [response] };
 }
 
 // Routing
 function shouldContinue(state: AgentState) {
-  const messages = state.messages;
+  const messages = state.messages ?? [];
   const last = messages[messages.length - 1] as any;
   if (last?.tool_calls && last.tool_calls.length > 0) {
     return "tools";
@@ -60,7 +59,7 @@ function shouldContinue(state: AgentState) {
 }
 
 // This is the important export for the CLI and Studio
-export const graph = new StateGraph(MessagesAnnotation)
+export const graph = new StateGraph(AppState)
   .addNode("assistant", assistantNode)
   .addNode("tools", toolNode)
   .addEdge(START, "assistant")

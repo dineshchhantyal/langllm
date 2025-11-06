@@ -12,6 +12,7 @@
     "dotenv": "^17.2.3"
   },
   "scripts": {
-    "gemini": "bun run src/agent-gemini.ts"
+    "gemini": "bun run src/agent-gemini.ts",
+    "moe": "bun run src/run_moe.ts"
   }
 }

@@ -1,7 +1,8 @@
 {
   "node_version": "20",
   "graphs": {
-    "agent": "./src/graph.ts:graph"
+    "agent": "./src/graph.ts:graph",
+    "moe_agent": "./src/graph_moe.ts:moeGraph"
   },
   "env": ".env"
 }
