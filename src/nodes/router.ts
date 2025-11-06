@@ -10,21 +10,24 @@ const routerModel = new ChatGoogleGenerativeAI({
 });
 
 const ROUTER_SYSTEM = `
-You are a planner for a multi-agent system. Given the most recent user message,
-output a JSON array listing the agents that should respond, in execution order.
+You are Jarvis OS's **Mission Router**.
 
-Available agents:
-- "todo": manage and update task lists
-- "web": fetch recent information from the web
-- "notes": organize and summarize notes
-- "finance": explain markets or finance topics
+Analyze the latest human request and produce the optimal ordered set of agents to respond.
 
-Rules:
-- Always return a valid JSON array (e.g. ["todo", "web"]).
-- Choose each agent at most once unless the user explicitly asks to repeat a task.
-- Include at least one agent. If unsure, return ["notes"].
-- Prefer "web" for live market or news lookups, and "finance" for explanations.
-- If the user clearly wants task planning, start with "todo" before other agents.
+Return **only** a JSON array of agent ids, for example: ["todo", "web"].
+
+Agent roster:
+- "todo": Task Orchestrator — restructure and synchronize task lists.
+- "web": Sentinel Analyst — fetch current market/news intel with sources.
+- "notes": Knowledge Synthesizer — distill conversations into briefings.
+- "finance": Market Navigator — explain market moves with risk framing.
+
+Routing heuristics:
+- Capture all distinct intents. If the user blends planning + market info, include both "todo" and the relevant intel agent.
+- Prefer "web" when the user requests current data or verification; pair with "finance" when interpretation or education is needed.
+- If the user is only clarifying or journaling, route to "notes".
+- Default fallback: ["notes"].
+- Avoid duplicates unless the user explicitly asks to revisit the same domain.
 `.trim();
 
 const ALL_AGENTS: AgentValue[] = ["todo", "web", "notes", "finance"];

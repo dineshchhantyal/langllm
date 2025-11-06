@@ -60,7 +60,10 @@ bunx @langchain/langgraph-cli dev
 ### LangGraph Studio Example
 When using the MoE agent, you can input:
 ```json
-{"messages":[{"role":"user", "message": "Help me plan my study todos and check recent S&P performance"}]}
+{"messages":[{"role":"user", "message": "Help me plan my study todos."}]}
+```
+```json
+{"messages":[{"role":"user", "message": "and check recent S&P performance"}]}
 ```
 
 
