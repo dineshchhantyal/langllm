@@ -1,119 +1,128 @@
 [
-	{
-		"id": "fe6b2973-f4f1-4ece-8dbc-d358af7fd592",
-		"title": "Biology Revision",
-		"description": null,
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T00:23:12.508Z",
-		"updatedAt": "2025-11-06T00:23:12.508Z"
-	},
-	{
-		"id": "67ed2fc2-1a4d-4678-95a0-0150be6644d1",
-		"title": "Research New Year birthday party venues",
-		"description": null,
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T04:55:42.565Z",
-		"updatedAt": "2025-11-06T04:55:42.565Z"
-	},
-	{
-		"id": "52c5ea3d-57b9-4f3a-936f-bde4202bdd36",
-		"title": "Research flights and accommodations for Nepal trip",
-		"description": "Look into flight options and book suitable accommodation.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:03:13.903Z",
-		"updatedAt": "2025-11-06T05:03:13.903Z"
-	},
-	{
-		"id": "53b88e83-68a3-41fd-aff8-1558c7ef4f76",
-		"title": "Create Nepal trip itinerary",
-		"description": "Plan daily activities and places to visit in Nepal.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:03:13.903Z",
-		"updatedAt": "2025-11-06T05:03:13.903Z"
-	},
-	{
-		"id": "3c0f7ec8-f874-48fa-bf52-8ff0917a838d",
-		"title": "Check Nepal visa requirements",
-		"description": "Verify if a visa is needed and apply if necessary.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:03:13.903Z",
-		"updatedAt": "2025-11-06T05:03:13.903Z"
-	},
-	{
-		"id": "8938db77-a451-4a2c-8acd-27b4dec42347",
-		"title": "Pack for Nepal trip",
-		"description": "Prepare all necessary items for the trip.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:03:13.903Z",
-		"updatedAt": "2025-11-06T05:03:13.903Z"
-	},
-	{
-		"id": "80a66753-0744-402f-817e-6f7882476690",
-		"title": "Research ICPC competition details",
-		"description": "Review the official schedule, rules, and deadlines for the competition.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "5d87c209-94e7-4d82-85f7-7061b27b6940",
-		"title": "Form ICPC competition team",
-		"description": "Confirm teammates and assign roles for the event.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "cb3f6039-5277-46a9-a05e-6350781f878c",
-		"title": "Register for ICPC competition",
-		"description": "Submit the team registration before the deadline.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "160fde80-5fa3-49ec-8bc8-5d452a42dcb6",
-		"title": "Book travel for ICPC competition",
-		"description": "Arrange flights or other transportation to the ICPC competition location.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "76ff608b-ff7b-4463-9889-cb43c5d9351d",
-		"title": "Book accommodation for ICPC competition",
-		"description": "Secure lodging close to the competition venue.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "cc410b41-bcba-4b86-93be-7ea8042d5f2a",
-		"title": "Practice coding problems for ICPC",
-		"description": "Schedule regular practice sessions with the team.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	},
-	{
-		"id": "972627be-e672-43fc-92db-3766624f26dc",
-		"title": "Pack essentials for ICPC trip",
-		"description": "Prepare laptops, chargers, documents, and travel necessities.",
-		"dueDate": null,
-		"status": "pending",
-		"createdAt": "2025-11-06T05:12:00.000Z",
-		"updatedAt": "2025-11-06T05:12:00.000Z"
-	}
+  {
+    "id": "fe6b2973-f4f1-4ece-8dbc-d358af7fd592",
+    "title": "Biology Revision",
+    "description": null,
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T00:23:12.508Z",
+    "updatedAt": "2025-11-06T00:23:12.508Z"
+  },
+  {
+    "id": "67ed2fc2-1a4d-4678-95a0-0150be6644d1",
+    "title": "Research New Year birthday party venues",
+    "description": null,
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T04:55:42.565Z",
+    "updatedAt": "2025-11-06T04:55:42.565Z"
+  },
+  {
+    "id": "52c5ea3d-57b9-4f3a-936f-bde4202bdd36",
+    "title": "Research flights and accommodations for Nepal trip",
+    "description": "Look into flight options and book suitable accommodation.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:03:13.903Z",
+    "updatedAt": "2025-11-06T05:03:13.903Z"
+  },
+  {
+    "id": "53b88e83-68a3-41fd-aff8-1558c7ef4f76",
+    "title": "Create Nepal trip itinerary",
+    "description": "Plan daily activities and places to visit in Nepal.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:03:13.903Z",
+    "updatedAt": "2025-11-06T05:03:13.903Z"
+  },
+  {
+    "id": "3c0f7ec8-f874-48fa-bf52-8ff0917a838d",
+    "title": "Check Nepal visa requirements",
+    "description": "Verify if a visa is needed and apply if necessary.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:03:13.903Z",
+    "updatedAt": "2025-11-06T05:03:13.903Z"
+  },
+  {
+    "id": "8938db77-a451-4a2c-8acd-27b4dec42347",
+    "title": "Pack for Nepal trip",
+    "description": "Prepare all necessary items for the trip.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:03:13.903Z",
+    "updatedAt": "2025-11-06T05:03:13.903Z"
+  },
+  {
+    "id": "80a66753-0744-402f-817e-6f7882476690",
+    "title": "Research ICPC competition details",
+    "description": "Review the official schedule, rules, and deadlines for the competition.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "5d87c209-94e7-4d82-85f7-7061b27b6940",
+    "title": "Form ICPC competition team",
+    "description": "Confirm teammates and assign roles for the event.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "cb3f6039-5277-46a9-a05e-6350781f878c",
+    "title": "Register for ICPC competition",
+    "description": "Submit the team registration before the deadline.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "160fde80-5fa3-49ec-8bc8-5d452a42dcb6",
+    "title": "Book travel for ICPC competition",
+    "description": "Arrange flights or other transportation to the ICPC competition location.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "76ff608b-ff7b-4463-9889-cb43c5d9351d",
+    "title": "Book accommodation for ICPC competition",
+    "description": "Secure lodging close to the competition venue.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "cc410b41-bcba-4b86-93be-7ea8042d5f2a",
+    "title": "Practice coding problems for ICPC",
+    "description": "Schedule regular practice sessions with the team.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "972627be-e672-43fc-92db-3766624f26dc",
+    "title": "Pack essentials for ICPC trip",
+    "description": "Prepare laptops, chargers, documents, and travel necessities.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:12:00.000Z",
+    "updatedAt": "2025-11-06T05:12:00.000Z"
+  },
+  {
+    "id": "61b1d33c-0411-4ee5-8f9d-e5fb957263df",
+    "title": "Plan Nepal Trip",
+    "description": "Organize all aspects of the trip to Nepal, including flights, accommodation, itinerary, and necessary documents.",
+    "dueDate": null,
+    "status": "pending",
+    "createdAt": "2025-11-06T05:14:07.656Z",
+    "updatedAt": "2025-11-06T05:14:07.656Z"
+  }
 ]

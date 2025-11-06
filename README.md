@@ -29,10 +29,10 @@ This project runs entirely on Bun and showcases two LangGraph flows backed by Go
   ```
 - Run the MoE router demo:
   ```bash
-  bun run src/run_moe.ts "Help me plan my study todos and check recent S&P performance"
+  bun run src/run_moe.ts "I am going to Nepal. Help me plan my trip and add to my todo list."
   ```
   ```bash
-  bun run moe "Help me plan my study todos and check recent S&P performance"
+  bun run moe "I am going to Nepal. Help me plan my trip and add to my todo list."
   ```
   The MoE agent now performs real CRUD operations on a lightweight file-backed task store and, when configured, calls a live web search tool.
 
@@ -60,7 +60,7 @@ bunx @langchain/langgraph-cli dev
 ### LangGraph Studio Example
 When using the MoE agent, you can input:
 ```json
-{"messages":[{"role":"user", "message": "Help me plan my study todos."}]}
+{"messages":[{"role":"user", "message": "I am going to Nepal. Help me plan my trip and add to my todo list."}]}
 ```
 ```json
 {"messages":[{"role":"user", "message": "and check recent S&P performance"}]}
